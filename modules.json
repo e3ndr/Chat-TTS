@@ -1,0 +1,17 @@
+{
+    "supported": [
+        "*"
+    ],
+    "unsupported": [],
+    "version": "1.0.0",
+    "name": "Chat TTS",
+    "overlays": [
+        "module.js"
+    ],
+    "required": [
+        {
+            "namespace": "chat_tts",
+            "id": "chat_tts"
+        }
+    ]
+}
