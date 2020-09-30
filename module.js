@@ -19,8 +19,10 @@ MODULES.moduleClasses["chat_tts"] = class {
         };
 
         koi.addEventListener("chat", (event) => {
-            this.queue.push(encodeURIComponent(event.message.trim()));
-            this.check();
+            if (this.settings.enabled) {
+                this.queue.push(encodeURIComponent(event.sender.username + " says " + event.message.trim()));
+                this.check();
+            }
         });
     }
 
@@ -44,12 +46,14 @@ MODULES.moduleClasses["chat_tts"] = class {
 
     settingsDisplay = {
         text_to_speech_voice: "select",
+        enabled: "checkbox",
         skip: "button"
     };
 
     defaultSettings = {
         text_to_speech_voice: ["Brian", "Russell", "Nicole", "Amy", "Salli", "Joanna", "Matthew", "Ivy", "Joey"],
         // skip: () => {}
+        enabled: true
     };
 
 };
