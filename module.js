@@ -40,7 +40,8 @@ MODULES.moduleClasses["chat_tts"] = class {
 
     getDataToStore() {
         return {
-            text_to_speech_voice: this.settings.text_to_speech_voice
+            text_to_speech_voice: this.settings.text_to_speech_voice,
+            enabled: this.settings.enabled
         };
     }
 
