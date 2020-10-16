@@ -31,7 +31,7 @@ MODULES.moduleClasses["chat_tts"] = class {
             this.audio = new Audio("https://api.casterlabs.co/v1/polly?voice=" + this.settings.text_to_speech_voice + "&text=" + this.queue.shift());
 
             this.audio.addEventListener("end", () => {
-                this.check();
+                this.check(true);
             });
 
             this.audio.play();
