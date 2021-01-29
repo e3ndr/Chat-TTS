@@ -3,9 +3,12 @@
         "*"
     ],
     "unsupported": [],
-    "version": "1.1.0",
+    "version": "1.1.1",
     "name": "Chat TTS",
     "overlays": [
+        "module.js"
+    ],
+    "scripts": [
         "module.js"
     ],
     "required": [
