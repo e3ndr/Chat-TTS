@@ -13,8 +13,8 @@ MODULES.moduleClasses["chat_tts"] = class {
 
         this.defaultSettings.skip = () => {
             if (instance.audio) {
-                instance.audio.pause();
-                instance.check(true);
+                instance.audio = null;
+                instance.check();
             }
         };
 
