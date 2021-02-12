@@ -26,13 +26,13 @@ MODULES.moduleClasses["chat_tts"] = class {
         });
     }
 
-    check(force = false) {
-        if ((force || !this.audio) && (this.queue.length > 0)) {
+    check() {
+        if (!this.audio && (this.queue.length > 0)) {
             this.audio = new Audio("https://api.casterlabs.co/v1/polly?voice=" + this.settings.text_to_speech_voice + "&text=" + this.queue.shift());
 
             this.audio.addEventListener("ended", () => {
                 this.audio = null;
-                this.check(true);
+                this.check();
             });
 
             this.audio.play();
