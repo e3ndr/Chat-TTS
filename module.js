@@ -29,6 +29,7 @@ MODULES.moduleClasses["chat_tts"] = class {
 
     skip() {
         if (this.audio) {
+            this.audio.pause();
             this.audio = null;
             this.check();
         }
@@ -75,10 +76,7 @@ MODULES.moduleClasses["chat_tts"] = class {
     }
 
     getDataToStore() {
-        return {
-            text_to_speech_voice: this.settings.text_to_speech_voice,
-            enabled: this.settings.enabled
-        };
+        return this.settings;
     }
 
     settingsDisplay = {
