@@ -9,21 +9,9 @@ MODULES.moduleClasses["chat_tts"] = class {
         this.lastclip = 0;
         this.queue = [];
 
-        const instance = this;
-
         this.defaultSettings.skip = () => {
-            if (instance.audio) {
-                instance.audio = null;
-                instance.check();
-            }
+            this.skip();
         };
-
-        koi.addEventListener("chat", (event) => {
-            if (this.settings.enabled) {
-                this.queue.push(encodeURIComponent(event.sender.username + " says " + event.message.trim()));
-                this.check();
-            }
-        });
     }
 
     check() {
@@ -37,6 +25,51 @@ MODULES.moduleClasses["chat_tts"] = class {
 
             this.audio.play();
         }
+    }
+
+    skip() {
+        if (this.audio) {
+            this.audio = null;
+            this.check();
+        }
+    }
+
+    init() {
+        console.log(`-Chat-TTS WebhookID-\n${this.settings.webhookId}\n--------------------`);
+
+        koi.addEventListener("chat", (event) => {
+            if (this.settings.enabled) {
+                this.queue.push(encodeURIComponent(event.sender.username + " says " + event.message.trim()));
+                this.check();
+            }
+        });
+
+        this.kinoko.connect(this.settings.webhookId, "parent");
+
+        this.kinoko.on("close", () => {
+            setTimeout(() => {
+                this.kinoko.connect(this.settings.webhookId, "parent");
+            }, 5000);
+        });
+
+        this.kinoko.on("message", (message) => {
+            switch (message.type) {
+                case "ENABLE": {
+                    this.settings.enabled = message.enabled;
+                    MODULES.saveToStore(this);
+
+                    if (!this.settings.enabled) {
+                        this.skip();
+                    }
+                    break;
+                }
+
+                case "SKIP": {
+                    this.skip();
+                    break;
+                }
+            }
+        });
     }
 
     getDataToStore() {
@@ -55,7 +88,8 @@ MODULES.moduleClasses["chat_tts"] = class {
     defaultSettings = {
         text_to_speech_voice: ["Brian", "Russell", "Nicole", "Amy", "Salli", "Joanna", "Matthew", "Ivy", "Joey"],
         // skip: () => {}
-        enabled: true
+        enabled: true,
+        webhookId: `chat-tts:${generateUnsafeUniquePassword()}`
     };
 
 };
