@@ -44,7 +44,7 @@ MODULES.moduleClasses["chat_tts"] = class {
             }
         });
 
-        this.kinoko = new this.kinoko();
+        this.kinoko = new Kinoko();
 
         this.kinoko.connect(this.settings.webhookId, "parent");
 
